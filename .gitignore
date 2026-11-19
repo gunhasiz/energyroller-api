@@ -4,8 +4,14 @@
 *.log
 *.pyc
 *.swp
+.DS_Store
+.atom/
+.build/
 .buildlog/
 .history
+.svn/
+.swiftpm/
+migrate_working_dir/
 
 # Flutter repo-specific
 /bin/cache/
@@ -37,6 +43,7 @@ analysis_benchmark.json
 **/generated_plugin_registrant.dart
 .packages
 .pub-preload-cache/
+.pub-cache/
 .pub/
 build/
 flutter_*.png
@@ -51,6 +58,9 @@ unlinked_spec.ds
 .widget_preview/
 
 # Android related
+/android/app/debug
+/android/app/profile
+/android/app/release
 **/android/**/gradle-wrapper.jar
 .gradle/
 **/android/captures/
@@ -114,6 +124,9 @@ coverage/
 # Symbols
 app.*.symbols
 
+# Obfuscation related
+app.*.map.json
+
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3
 !**/ios/**/default.mode2v3
@@ -121,3 +134,23 @@ app.*.symbols
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 !/dev/ci/**/Gemfile.lock
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# VSCode
+.vscode/
+
+# DB and temp
+db/*.db
+db/*.db-wal
+db/*.db-shm
+data/*.db
+data/*.db-wal
+data/*.db-shm
+
+# Server bin
+/server
