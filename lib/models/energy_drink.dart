@@ -46,7 +46,7 @@ class EnergyDrink {
       'brand': brand,
       'flavor': flavor,
       'caffeine_mg': caffeineMg,
-      'volume_ml': volume,
+      'volume': volume,
       'created_at': createdAt,
     };
   }
@@ -72,15 +72,15 @@ class CreateDrinkInput {
     final brand = (json['brand'] as String?)?.trim() ?? '';
     final rawFlavor = (json['flavor'] as String?)?.trim();
     final caffeine = int.tryParse(json['caffeine_mg']?.toString() ?? '') ?? 80;
-    final volume = int.tryParse(json['volume_ml']?.toString() ?? '') ?? 250;
+    final volume = int.tryParse(json['volume']?.toString() ?? '') ?? 250;
 
     if (name.isEmpty || brand.isEmpty) {
-      throw const ValidationException('Fields name and brand are required.');
+      throw const ValidationException('Fields "name" and "brand" are required.');
     }
 
     if (caffeine < 0 || volume <= 0) {
       throw const ValidationException(
-        'Caffeine field can\'t be negative value, and volume must be greater than zero.',
+        'Caffeine cannot be negative and volume must be greater than zero.',
       );
     }
 

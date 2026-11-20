@@ -4,12 +4,14 @@ import 'package:shelf_router/shelf_router.dart';
 
 import '../models/energy_drink.dart';
 import '../repositories/drink_repository.dart';
+import '../services/auth_service.dart';
 import '../utils/json_response.dart';
 
-class DrinkHandlers {
+class DrinkHandler {
   final DrinkRepository _repository;
+  final AuthService _authService;
 
-  const DrinkHandlers(this._repository);
+  const DrinkHandler(this._repository, this._authService);
 
   Router get router {
     return Router()
@@ -29,15 +31,19 @@ class DrinkHandlers {
   }
 
   Future<Response> _addDrink(Request request) async {
+    if (!_authService.isAuthorized(request.headers['authorization'])) {
+      return jsonUnauthorized('Unauthorized. Please log in to add a drink.');
+    }
+
     try {
       final payload = await request.readAsString();
       if (payload.trim().isEmpty) {
-        return jsonBadRequest('Payload can\'t be empty.');
+        return jsonBadRequest('Request body cannot be empty.');
       }
 
       final decoded = jsonDecode(payload);
       if (decoded is! Map<String, dynamic>) {
-        return jsonBadRequest('Expected JSON.');
+        return jsonBadRequest('Expected a JSON object.');
       }
 
       final input = CreateDrinkInput.fromJson(decoded);
